@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dikshya Paudel - Software Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a12; --surface: rgba(255,255,255,0.04); --surface-hover: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08); --text: #f1f5f9; --muted: #94a3b8; --max: 960px;
+      --radius: 16px; --purple: #a855f7; --pink: #ec4899; --cyan: #22d3ee;
+      --green: #4ade80; --yellow: #facc15; --blue: #60a5fa;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x: hidden; }
+    .glow-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .glow { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.45; }
+    .glow-1 { width: 500px; height: 500px; background: #7c3aed; top: -120px; left: -100px; }
+    .glow-2 { width: 450px; height: 450px; background: #db2777; top: 30%; right: -150px; opacity: 0.3; }
+    .glow-3 { width: 400px; height: 400px; background: #4f46e5; bottom: 10%; left: 20%; opacity: 0.25; }
+    .page { position: relative; z-index: 1; }
+    a { color: var(--cyan); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 1.5rem; }
+    header { position: sticky; top: 0; z-index: 100; background: rgba(10,10,18,0.75); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .nav-logo { font-weight: 700; color: var(--text); text-decoration: none; }
+    nav ul { display: flex; gap: 1.75rem; list-style: none; }
+    nav a { color: var(--muted); font-size: 0.9rem; text-decoration: none; }
+    nav a:hover { color: var(--text); }
+    section { padding: 4.5rem 0; }
+    h1 { font-size: clamp(1.75rem,4.5vw,2.35rem); font-weight: 700; line-height: 1.3; letter-spacing: -0.03em; margin-bottom: 1.25rem; }
+    h2.section-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.35rem; letter-spacing: -0.02em; }
+    .section-sub { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; }
+    p { color: var(--muted); margin-bottom: 1rem; }
+    .hero p { font-size: 1.05rem; }
+    .glass { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: blur(12px); transition: background 0.25s, border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
+    .glass:hover { background: var(--surface-hover); border-color: rgba(255,255,255,0.14); transform: translateY(-3px); box-shadow: 0 20px 50px rgba(0,0,0,0.35); }
+    .stack-label { font-weight: 600; color: var(--text); margin: 2rem 0 0.85rem; font-size: 0.95rem; }
+    .pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .pill { padding: 0.35rem 0.85rem; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 999px; font-size: 0.8rem; color: var(--text); font-weight: 500; }
+    .specialise-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.25rem; }
+    .spec-card { padding: 1.5rem; }
+    .spec-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.85rem; }
+    .spec-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .spec-icon svg { width: 22px; height: 22px; }
+    .spec-card h3 { font-size: 1rem; font-weight: 600; color: var(--text); }
+    .spec-card p { font-size: 0.88rem; margin: 0; line-height: 1.65; }
+    .icon-purple { background: rgba(168,85,247,0.2); color: var(--purple); }
+    .icon-blue   { background: rgba(96,165,250,0.2); color: var(--blue); }
+    .icon-green  { background: rgba(74,222,128,0.2); color: var(--green); }
+    .icon-pink   { background: rgba(236,72,153,0.2); color: var(--pink); }
+    .icon-cyan   { background: rgba(34,211,238,0.2); color: var(--cyan); }
+    .icon-yellow { background: rgba(250,204,21,0.2); color: var(--yellow); }
+    .work-item { padding: 1.75rem; margin-bottom: 1.25rem; }
+    .work-item:last-child { margin-bottom: 0; }
+    .work-meta { font-size: 0.88rem; color: var(--muted); margin-bottom: 0.75rem; }
+    .work-meta strong { color: var(--text); }
+    .work-item ul { padding-left: 1.2rem; color: var(--muted); font-size: 0.9rem; }
+    .work-item li { margin-bottom: 0.45rem; }
+    .work-item code { font-size: 0.82rem; background: rgba(168,85,247,0.15); color: var(--purple); padding: 0.1rem 0.35rem; border-radius: 4px; }
+    /* Industry tags */
+    .work-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.85rem; }
+    .work-tag { padding: 0.2rem 0.65rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+    .tag-construction { background: rgba(250,204,21,0.12); color: var(--yellow); border: 1px solid rgba(250,204,21,0.2); }
+    .tag-manufacturing { background: rgba(74,222,128,0.12); color: var(--green); border: 1px solid rgba(74,222,128,0.2); }
+    .tag-logistics     { background: rgba(34,211,238,0.12); color: var(--cyan);  border: 1px solid rgba(34,211,238,0.2); }
+    .work-section-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin: 1.1rem 0 0.45rem; }
+    .label-construction { color: var(--yellow); }
+    .label-manufacturing { color: var(--green); }
+    .label-logistics { color: var(--cyan); }
+    .label-shared { color: var(--purple); }
+    .project-card strong { color: var(--text); font-weight: 600; }
+    .project-list { display: grid; gap: 1.25rem; }
+    .project-card { padding: 1.5rem; }
+    .project-meta { font-size: 0.78rem; color: var(--purple); font-weight: 500; margin-bottom: 0.5rem; }
+    .project-card h3 { font-size: 1.05rem; margin-bottom: 0.6rem; }
+    .project-card h3 a { color: var(--text); text-decoration: none; }
+    .project-card h3 a:hover { color: var(--cyan); }
+    .project-card p { font-size: 0.9rem; margin-bottom: 1rem; }
+    .impact { font-size: 0.85rem; color: var(--green); font-weight: 500; margin-top: 0.75rem; }
+    .project-card.featured { border-color: rgba(168,85,247,0.25); background: rgba(168,85,247,0.06); }
+    .project-features { list-style: none; margin: 0 0 1rem; padding: 0; }
+    .project-features li { position: relative; padding-left: 1.1rem; font-size: 0.85rem; color: var(--muted); margin-bottom: 0.4rem; line-height: 1.55; }
+    .project-features li::before { content: "->"; position: absolute; left: 0; color: var(--purple); font-size: 0.75rem; top: 0.15rem; }
+    .project-details { margin: 0.75rem 0 1rem; }
+    .project-details summary { cursor: pointer; font-size: 0.82rem; font-weight: 600; color: var(--purple); list-style: none; user-select: none; }
+    .project-details summary::-webkit-details-marker { display: none; }
+    .project-details summary::before { content: "+ "; font-weight: 700; }
+    .project-details[open] summary::before { content: "- "; }
+    .project-details[open] summary { margin-bottom: 0.6rem; }
+    .integration-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 1rem; }
+    .integration-card { padding: 1.25rem; }
+    .integration-card h3 { font-size: 0.95rem; margin-bottom: 0.4rem; color: var(--text); }
+    .integration-card p { font-size: 0.85rem; margin: 0; }
+    .btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+    .btn { display: inline-block; padding: 0.7rem 1.35rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: 0.2s; }
+    .btn-primary { background: linear-gradient(135deg, var(--purple), var(--pink)); color: #fff; }
+    .btn-primary:hover { opacity: 0.9; text-decoration: none; }
+    .btn-ghost { background: var(--surface); border: 1px solid var(--border); color: var(--text); }
+    .btn-ghost:hover { background: var(--surface-hover); text-decoration: none; }
+    footer { padding: 2.5rem 0; text-align: center; font-size: 0.82rem; color: var(--muted); border-top: 1px solid var(--border); }
+    @media (max-width: 540px) { nav ul { gap: 1rem; } section { padding: 3rem 0; } }
+  </style>
+</head>
+<body>
+  <div class="glow-wrap">
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+    <div class="glow glow-3"></div>
+  </div>
+  <div class="page">
+    <header>
+      <div class="wrap nav-inner">
+        <a href="#" class="nav-logo">Dikshya Paudel</a>
+        <nav>
+          <ul>
+            <li><a href="#specialise">Skills</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+
+      <section class="hero" id="home">
+        <div class="wrap">
+          <h1>I'm Dikshya, a software developer based in Nepal.</h1>
+          <p>I build production systems for businesses - ERP platforms, REST APIs, ecommerce workflows, and integrations that replace manual work with reliable software.</p>
+          <p>From multi-phase construction ERP, quick-commerce API layers in Nepal to spa services in Egypt, I focus on systems that fit how teams actually work.</p>
+          <p class="stack-label">My stack includes:</p>
+          <div class="pills">
+            <span class="pill">Python</span><span class="pill">JavaScript</span>
+            <span class="pill">Frappe Framework</span><span class="pill">ERPNext</span>
+            <span class="pill">Django</span><span class="pill">REST API</span>
+            <span class="pill">MariaDB</span><span class="pill">PostgreSQL</span>
+            <span class="pill">Docker</span><span class="pill">Git</span><span class="pill">Linux</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="specialise">
+        <div class="wrap">
+          <h2 class="section-title">I specialise in</h2>
+          <p class="section-sub">Full-stack delivery across backend, frontend, and business logic.</p>
+          <div class="specialise-grid">
+            <article class="glass spec-card">
+              <div class="spec-header">
+                <div class="spec-icon icon-purple">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                </div>
+                <h3>Full Stack Development</h3>
+              </div>
+              <p>End-to-end systems with Python and JavaScript - ERP modules, business logic, custom pages, and production deployments on Frappe/ERPNext.</p>
+            </article>
+            <article class="glass spec-card">
+              <div class="spec-header">
+                <div class="spec-icon icon-blue">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </div>
+                <h3>Frontend Development</h3>
+              </div>
+              <p>Responsive UIs - custom pages, client scripts, ecommerce storefronts, website builders, and dynamic JavaScript workflows.</p>
+            </article>
+            <article class="glass spec-card">
+              <div class="spec-header">
+                <div class="spec-icon icon-green">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                </div>
+                <h3>Backend Development</h3>
+              </div>
+              <p>Robust Python backends, server scripts, validations, scheduled jobs, and document lifecycle automation.</p>
+            </article>
+            <article class="glass spec-card">
+              <div class="spec-header">
+                <div class="spec-icon icon-pink">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                </div>
+                <h3>API Development &amp; Integration</h3>
+              </div>
+              <p>Secure REST APIs and sync pipelines - Fonepay payments, biometric attendance, ERP-to-storefront data sync, and third-party services.</p>
+            </article>
+            <article class="glass spec-card">
+              <div class="spec-header">
+                <div class="spec-icon icon-cyan">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                </div>
+                <h3>ERP &amp; Business Systems</h3>
+              </div>
+              <p>Industry ERP for construction, manufacturing, logistics, automotive, ecommerce, and service - LC modules, job cards, manifest settlement, and fiscal compliance.</p>
+            </article>
+            <article class="glass spec-card">
+              <div class="spec-header">
+                <div class="spec-icon icon-yellow">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v6c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 11v6c0 1.66 4 3 9 3s9-1.34 9-3v-6"/></svg>
+                </div>
+                <h3>Database &amp; System Design</h3>
+              </div>
+              <p>MariaDB and PostgreSQL - query optimization, and data models for multi-module ERP systems.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="work">
+        <div class="wrap">
+          <h2 class="section-title">Work</h2>
+          <p class="section-sub">Professional experience across full-time, freelance, and remote roles.</p>
+
+          <article class="glass work-item">
+            <div class="work-meta"><strong>Senior Frappe Developer</strong> &middot; Sajeelo Infotech &middot; May 2026 &ndash; Jun 2026 &middot; Freelance</div>
+            <span class="work-tag tag-construction">Ecommerce & Delivery Platform</span>
+              <span class="work-tag tag-manufacturing">Vehicle Management System</span>
+            <ul>
+              <li>Built 3+ configurable page components with live publishing workflows.</li>
+              <li>Developed 15+ Python REST APIs and JS sync pipelines &mdash; ~70% less manual data entry.</li>
+              <li>Delivered Vehicle Management System: job cards, QC, spare parts, billing, scheduling.</li>
+            </ul>
+          </article>
+
+          <article class="glass work-item">
+            <div class="work-meta"><strong>Frappe Developer</strong> &middot; Raindrop Inc. &middot; Sep 2024 &ndash; Apr 2026 &middot; Full-time</div>
+            <div class="work-tags">
+              <span class="work-tag tag-construction">Construction</span>
+              <span class="work-tag tag-manufacturing">Manufacturing</span>
+              <span class="work-tag tag-logistics">Logistics</span>
+            </div>
+            <ul>
+              <li>Built 41-doctype construction ERP from scratch across procurement, labour tracking, and project scheduling.</li>
+              <li>Purchase TDS handler across PO, Purchase Receipt, Supplier Quotation, and Purchase Invoice validations.</li>
+              <li>Sales credit control &mdash; bill count, days limit, and outstanding amount checks on invoice save.</li>
+              <li>Custom financial reports: vehicle expense tracking and supplier quotation comparison.</li>
+              <li>Integrated Fonepay payment gateway via Python REST API, eliminating manual payment reconciliation.</li>
+              <li>Automated biometric attendance for 50+ employees, saving ~4 hrs/week of HR manual work.</li>
+            </ul>
+          </article>
+
+          <article class="glass work-item">
+            <div class="work-meta"><strong>Frappe Developer</strong> &middot; AGB Company &middot; Aug 2025 &ndash; Jan 2026 &middot; Remote &middot; Egypt</div>
+            <span class="work-tag tag-construction">Spa & Service</span>
+            <span class="work-tag tag-manufacturing">Ecommerce</span>
+            <ul>
+              <li>Spa &amp; service ERP &mdash; booking, scheduling, 5+ custom doctypes across 2 time zones.</li>
+              <li>Ecommerce front-end with 100+ product listings and online ordering.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="projects">
+        <div class="wrap">
+          <h2 class="section-title">Featured Projects</h2>
+          <p class="section-sub">Client and personal work &mdash; scan the summary, expand any card for detail.</p>
+          <div class="project-list">
+
+            <article class="glass project-card featured">
+              <div class="project-meta">2024 &ndash; 2026 &middot; Raindrop &middot; Construction &middot; Egypt</div>
+              <h3><a href="#">Construction ERP</a></h3>
+              <p>41-doctype Frappe app for large-scale construction &mdash; 7-tier schedule billing, LC with bank-limit enforcement, and BOQ-to-invoice automation on ERPNext.</p>
+              <details class="project-details">
+                <summary>View details</summary>
+                <ul class="project-features">
+                  <li>7-tier schedules &mdash; Project Issue auto-creates Stock Entry; blocks over-issuance</li>
+                  <li>Letter of Credit &mdash; One-off/Regular limits, PO linkage, receipt &amp; payment sync</li>
+                  <li>NestedSet BOQ tasks &mdash; tower-wise mapping synced to project schedules</li>
+                  <li>Progress to invoice &mdash; Sales Invoice, Delivery Note &amp; RFQ drive schedule qty</li>
+                </ul>
+              </details>
+              <div class="pills"><span class="pill">Frappe</span><span class="pill">Python</span><span class="pill">41 Doctypes</span><span class="pill">LC/BG</span></div>
+              <p class="impact">LC tracking errors reduced to near zero</p>
+            </article>
+
+            <article class="glass project-card">
+              <div class="project-meta">2025 &ndash; 2026 &middot; Spa &amp; Service &middot; Egypt</div>
+              <h3><a href="#">Spa &amp; Service ERP</a></h3>
+              <p>Remote spa ERP with booking, scheduling, and ecommerce UI for 100+ products &mdash; delivered across 2 time zones on Frappe.</p>
+              <details class="project-details">
+                <summary>View details</summary>
+                <ul class="project-features">
+                  <li>5+ custom doctypes &mdash; appointments, staff schedules, and service booking workflows</li>
+                  <li>Ecommerce front-end &mdash; 100+ product listings with online ordering on Frappe</li>
+                  <li>Client scripts &amp; validations &mdash; reduced double-booking and scheduling conflicts</li>
+                </ul>
+              </details>
+              <div class="pills"><span class="pill">Frappe</span><span class="pill">JavaScript</span><span class="pill">Booking</span></div>
+              <p class="impact">~40% fewer scheduling errors</p>
+            </article>
+
+            <article class="glass project-card">
+              <div class="project-meta">2026 &middot; Quick Commerce &middot; Nepal</div>
+              <h3><a href="#">API Integration Layer</a></h3>
+              <p>15+ REST endpoints for a 10-minute grocery delivery app &mdash; real-time branch, inventory, sales, purchase, and HR sync with ERPNext.</p>
+              <details class="project-details">
+                <summary>View details</summary>
+                <ul class="project-features">
+                  <li>Sales &amp; purchase APIs &mdash; invoices, returns, updates synced to ERPNext</li>
+                  <li>Master data &mdash; customers, vendors, items, employees, and branch/agency sync</li>
+                  <li>HR &amp; attendance &mdash; check-ins, roster pages, overtime &amp; efficiency reports</li>
+                  <li>Stock damage API &amp; attendance processing tool for warehouse ops</li>
+                </ul>
+              </details>
+              <div class="pills"><span class="pill">REST API</span><span class="pill">Python</span><span class="pill">ERPNext</span></div>
+              <p class="impact">Real-time stock accuracy for 10-minute delivery SLA</p>
+            </article>
+
+            <article class="glass project-card">
+              <div class="project-meta">2025 &ndash; 2026 &middot; Manufacturing &middot; Nepal</div>
+              <h3><a href="#">Manufacturing &amp; Energy Enterprise ERP</a></h3>
+              <p>Manufacturing ERP customizations &mdash; purchase TDS on procurement docs, excise/VAT ledger on invoices, sales credit control, and custom financial reports.</p>
+              <details class="project-details">
+                <summary>View details</summary>
+                <ul class="project-features">
+                  <li>Purchase TDS handler &mdash; PO, Purchase Receipt, Supplier Quotation &amp; Purchase Invoice validations</li>
+                  <li>Excise ledger &amp; VAT &mdash; custom GL entries and tax rows on Sales &amp; Purchase Invoice</li>
+                  <li>Sales credit control &mdash; bill count, days limit &amp; outstanding amount checks on invoice save</li>
+                  <li>Custom reports &mdash; vehicle expense tracking &amp; supplier quotation comparison</li>
+                </ul>
+              </details>
+              <div class="pills"><span class="pill">Python</span><span class="pill">ERPNext</span><span class="pill">TDS</span><span class="pill">Excise</span></div>
+              <p class="impact">Stricter procurement tax compliance and customer credit enforcement</p>
+            </article>
+
+            <article class="glass project-card">
+              <div class="project-meta">2026 &middot; Automotive &middot; Nepal</div>
+              <h3><a href="#">Vehicle Management System</a></h3>
+              <p>Workshop ERP &mdash; job cards, quality inspection, warranty claims, technician assignment, spare parts, and billing on Frappe.</p>
+              <details class="project-details">
+                <summary>View details</summary>
+                <ul class="project-features">
+                  <li>Vehicle Job Cards &mdash; complaints, work items, service items &amp; technician assignment</li>
+                  <li>Quality inspection &mdash; request workflow with structured QC readings</li>
+                  <li>Warranty claims &mdash; line-item tracking linked to job card operations</li>
+                  <li>Vehicle search page &amp; centralized settings for workshop configuration</li>
+                </ul>
+              </details>
+              <div class="pills"><span class="pill">Frappe</span><span class="pill">Job Cards</span><span class="pill">QC</span></div>
+              <p class="impact">End-to-end service operations on a single platform</p>
+            </article>
+
+            <article class="glass project-card">
+              <div class="project-meta">Personal &middot; Django</div>
+              <h3><a href="https://github.com/DikshyaPaudel/BudgetBuddy" target="_blank">Budget Buddy</a></h3>
+              <p>Full-stack expense tracker with PostgreSQL, Google OAuth, and Chart.js dashboards for personal and business reporting.</p>
+              <details class="project-details">
+                <summary>View details</summary>
+                <ul class="project-features">
+                  <li>Django + PostgreSQL backend with RESTful expense CRUD</li>
+                  <li>Google OAuth &mdash; secure sign-in without password management</li>
+                  <li>Categorized expenses &mdash; separate personal vs business reporting</li>
+                  <li>Chart.js dashboards &mdash; visual spend breakdown by category &amp; period</li>
+                </ul>
+              </details>
+              <div class="pills"><span class="pill">Django</span><span class="pill">PostgreSQL</span><span class="pill">Chart.js</span></div>
+              <p class="impact">Categorized expense tracking with OAuth login</p>
+            </article>
+
+            <article class="glass project-card">
+              <div class="project-meta">Open Source &middot; Frappe</div>
+              <h3><a href="https://github.com/DikshyaPaudel/Letter-of-Credit" target="_blank">Letter of Credit Module</a></h3>
+              <p>Reusable LC module &mdash; issuance, usage, on/off transitions, bank limits, and automated validations for ERPNext.</p>
+              <details class="project-details">
+                <summary>View details</summary>
+                <ul class="project-features">
+                  <li>Full LC lifecycle &mdash; issuance, usage, LC on/off state transitions</li>
+                  <li>Bank LC limits &mdash; One-off vs Regular categories with balance enforcement</li>
+                  <li>Linked documents &mdash; PO, Purchase Receipt &amp; Payment Entry sync</li>
+                  <li>Automated validations &mdash; prevents limit overruns and tracking errors</li>
+                </ul>
+              </details>
+              <div class="pills"><span class="pill">Frappe</span><span class="pill">ERPNext</span><span class="pill">Python</span></div>
+              <p class="impact">Open-source LC lifecycle for construction finance</p>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <section id="integrations">
+        <div class="wrap">
+          <h2 class="section-title">Integrations</h2>
+          <p class="section-sub">Reusable modules deployed across client sites.</p>
+          <div class="integration-grid">
+            <div class="glass integration-card">
+              <h3>Payment Gateway</h3>
+              <p>Dynamic QR payments &amp; automated reconciliation.</p>
+            </div>
+            <div class="glass integration-card">
+              <h3>Biometric (K40)</h3>
+              <p>Auto attendance sync for 50+ employees.</p>
+            </div>
+            <div class="glass integration-card">
+              <h3>IRD Compliance</h3>
+              <p>Nepali tax reporting customizations.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="wrap">
+          <h2 class="section-title">Contact</h2>
+          <p>Open to full-time, contract, and remote opportunities. I focus on systems that solve real business problems.</p>
+          <p>
+            <a href="mailto:dikshyapaudel9@gmail.com">dikshyapaudel9@gmail.com</a><br />
+            <a href="tel:+9779869085197">(+977) 9869085197</a>
+          </p>
+          <div class="btn-row">
+            <a href="DikshyaPaudel-SoftwareDeveloper-CV.pdf" class="btn btn-primary" download>Download CV</a>
+            <a href="https://github.com/DikshyaPaudel" class="btn btn-ghost" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="wrap">&copy; 2026 Dikshya Paudel &middot; Software Developer</div>
+    </footer>
+  </div>
+</body>
+</html>
