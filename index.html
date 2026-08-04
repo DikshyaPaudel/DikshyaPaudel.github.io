@@ -136,6 +136,7 @@
           <p class="stack-label">My stack includes:</p>
           <div class="pills">
             <span class="pill">Python</span><span class="pill">JavaScript</span>
+            <span class="pill">FastAPI</span>
             <span class="pill">Frappe Framework</span><span class="pill">ERPNext</span>
             <span class="pill">Django</span><span class="pill">REST API</span>
             <span class="pill">MariaDB</span><span class="pill">PostgreSQL</span>
@@ -258,6 +259,22 @@
           <p class="section-sub">Client and personal work &mdash; scan the summary, expand any card for detail.</p>
           <div class="project-list">
 
+            <article class="glass project-card featured">
+               <div class="project-meta">Personal &middot; AI &amp; FinTech &middot; Live App</div>
+              <h3><a href="https://snapledger-api.onrender.com/app/" target="_blank">SnapLedger &mdash; Receipt &amp; Invoice Intelligence</a></h3>
+              <p>API and web app that turns photos of receipts and invoices into structured data using Gemini vision LLM, async Redis background workers, and human-in-the-loop verification.</p>
+              <details class="project-details">
+                <summary>View details</summary>
+                <ul class="project-features">
+                  <li>Human-in-the-Loop Architecture &mdash; Uncouples extraction (<code>POST /extract</code>) from persistence (<code>POST /receipts</code>) with an editable review UI to prevent unverified AI errors in financial ledgers</li>
+                  <li>Async Background Queue &mdash; Non-blocking processing via FastAPI + Redis + <code>arq</code> returning instant job IDs with status polling (<code>GET /jobs/{id}</code>)</li>
+                  <li>LLM Vision Parsing &mdash; Utilizes Gemini vision model to reason about document structure without fragile vendor-specific OCR regex rules</li>
+                  <li>Validation &amp; Fraud Prevention &mdash; Non-receipt rejection, AI confidence scoring, category estimation, and duplicate detection (matching vendor, total, and dates)</li>
+                </ul>
+              </details>
+              <div class="pills"><span class="pill">FastAPI</span><span class="pill">Gemini Vision API</span><span class="pill">Redis / arq</span><span class="pill">PostgreSQL</span><span class="pill">Docker Compose</span><span class="pill">pytest</span></div>
+              <p class="impact">Automates document parsing with human review safeguarding ledger accuracy</p>
+            </article>
             <article class="glass project-card featured">
               <div class="project-meta">2024 &ndash; 2026 &middot; Raindrop &middot; Construction </div>
               <h3><a href="#">Construction ERP</a></h3>
